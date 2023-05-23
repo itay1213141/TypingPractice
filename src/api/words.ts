@@ -1,102 +1,102 @@
-import { PracticeWord } from "../common/types/words";
+import { Language, PracticeWord } from "../common/types/words";
 
 export const getProgrammingWords = async (): Promise<PracticeWord[]> => {
   return [
     {
-      eng: "Variable",
-      heb: "משתנה",
+      [Language.English]: "Variable",
+      [Language.Hebrew]: "משתנה",
     },
     {
-      eng: "Function",
-      heb: "פונקציה",
+      [Language.English]: "Function",
+      [Language.Hebrew]: "פונקציה",
     },
     {
-      eng: "Loop",
-      heb: "לולאה",
+      [Language.English]: "Loop",
+      [Language.Hebrew]: "לולאה",
     },
     {
-      eng: "Array",
-      heb: "מערך",
+      [Language.English]: "Array",
+      [Language.Hebrew]: "מערך",
     },
     {
-      eng: "Object",
-      heb: "אובייקט",
+      [Language.English]: "Object",
+      [Language.Hebrew]: "אובייקט",
     },
     {
-      eng: "Class",
-      heb: "קלאס",
+      [Language.English]: "Class",
+      [Language.Hebrew]: "מחלקה",
     },
     {
-      eng: "Method",
-      heb: "מתודה",
+      [Language.English]: "Method",
+      [Language.Hebrew]: "מתודה",
     },
     {
-      eng: "String",
-      heb: "מחרוזת",
+      [Language.English]: "String",
+      [Language.Hebrew]: "מחרוזת",
     },
     {
-      eng: "Integer",
-      heb: "מספר שלם",
+      [Language.English]: "Integer",
+      [Language.Hebrew]: "מספר שלם",
     },
     {
-      eng: "Boolean",
-      heb: "בוליאני",
+      [Language.English]: "Boolean",
+      [Language.Hebrew]: "בוליאני",
     },
     {
-      eng: "Conditional",
-      heb: "תלוי תנאי",
+      [Language.English]: "Conditional",
+      [Language.Hebrew]: "תלוי תנאי",
     },
     {
-      eng: "Operator",
-      heb: "אופרטור",
+      [Language.English]: "Operator",
+      [Language.Hebrew]: "אופרטור",
     },
     {
-      eng: "Parameter",
-      heb: "פרמטר",
+      [Language.English]: "Parameter",
+      [Language.Hebrew]: "פרמטר",
     },
     {
-      eng: "Return",
-      heb: "החזר",
+      [Language.English]: "Return",
+      [Language.Hebrew]: "החזר",
     },
     {
-      eng: "Algorithm",
-      heb: "אלגוריתם",
+      [Language.English]: "Algorithm",
+      [Language.Hebrew]: "אלגוריתם",
     },
     {
-      eng: "Debug",
-      heb: "דיבאג",
+      [Language.English]: "Debug",
+      [Language.Hebrew]: "דיבאג",
     },
     {
-      eng: "Syntax",
-      heb: "תחביר",
+      [Language.English]: "Syntax",
+      [Language.Hebrew]: "תחביר",
     },
     {
-      eng: "Compiler",
-      heb: "מהדר",
+      [Language.English]: "Compiler",
+      [Language.Hebrew]: "מהדר",
     },
     {
-      eng: "Code",
-      heb: "קוד",
+      [Language.English]: "Code",
+      [Language.Hebrew]: "קוד",
     },
     {
-      eng: "Library",
-      heb: "ספרייה",
+      [Language.English]: "Library",
+      [Language.Hebrew]: "ספרייה",
     },
     {
-      eng: "Database",
-      heb: "מסד נתונים",
+      [Language.English]: "Database",
+      [Language.Hebrew]: "מסד נתונים",
     },
     {
-      eng: "Query",
-      heb: "שאילתה",
+      [Language.English]: "Query",
+      [Language.Hebrew]: "שאילתה",
     },
     {
-      eng: "Index",
-      heb: "אינדקס",
+      [Language.English]: "Index",
+      [Language.Hebrew]: "אינדקס",
     },
     {
-      eng: "Cache",
-      heb: "מטמון",
+      [Language.English]: "Cache",
+      [Language.Hebrew]: "מטמון",
     },
   ];
 };

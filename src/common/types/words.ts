@@ -1,4 +1,6 @@
-export type PracticeWord = {
-  heb: string;
-  eng: string;
-};
+export enum Language {
+  Hebrew = "עברית",
+  English = "English",
+}
+
+export type PracticeWord = Record<Language, string>;
