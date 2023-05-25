@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { getProgrammingWords } from '../../api/words';
 import { pickRandomItems, range } from '../../common/utils/collections';
 import { PuffLoader } from 'react-spinners';
@@ -6,14 +6,17 @@ import { Language, PracticeWord } from '../../common/types/words';
 import './TypingPractice.less'
 import PartialWord from '../PartialWord/PartialWord';
 import { Status } from '../../common/types/status';
+import { useEventListener } from 'usehooks-ts';
+import appConfig from '../../config/app';
+
 interface ITypingPracticeProps {
-  rounds: number;
+  rounds?: number;
   wordsCount: number;
   language: Language;
   translationLanguage?: Language;
 }
 
-const TypingPractice: React.FC<ITypingPracticeProps> = ({ rounds, wordsCount, language, translationLanguage }) => {
+const TypingPractice: React.FC<ITypingPracticeProps> = ({ rounds = appConfig.DEFAULT_ROUNDS, wordsCount, language, translationLanguage }) => {
   const [status, setStatus] = useState<Status>(Status.Loading);
   const [words, setWords] = useState<PracticeWord[][]>([]);
 
@@ -21,31 +24,28 @@ const TypingPractice: React.FC<ITypingPracticeProps> = ({ rounds, wordsCount, la
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
   const [correctLetterIndex, setCorrectLetterIndex] = useState<number>(0);
   
-  const currentRoundNumber: number = currentRoundIndex + 1;
-  const currentWordNumber: number = currentWordIndex + 1;
-  const currentWord: PracticeWord | undefined =
-    status !== Status.Loading ? words[currentRoundIndex][currentWordIndex] : undefined;
+  const currentRoundNumber: number = useMemo(() => currentRoundIndex + 1, [currentRoundIndex]);
+  const currentWordNumber: number = useMemo(() => currentWordIndex + 1, [currentWordIndex]);
+  const currentWord: PracticeWord | undefined = useMemo(() => 
+    status !== Status.Loading ? words[currentRoundIndex][currentWordIndex] : undefined, [status, words, currentRoundIndex, currentWordIndex]);
 
-  const onKeyPressed = useCallback((event: KeyboardEvent) => {    
-    if (status === Status.Ready) {
+  useEventListener('keydown', (event: KeyboardEvent) => {    
+    if (status === Status.Ready && !event.key.match(/F\d+/)) {
       setStatus(Status.Active);
       return;
     }
     
     const { key } = event;
     
-    if (currentWord && currentWord[language][correctLetterIndex] === key) {
+    if (currentWord && currentWord.value[language][correctLetterIndex] === key) {
       progress();
     }
-  }, [words, status, currentRoundIndex, currentWordIndex, correctLetterIndex]);
-
-  useEffect(() => {
-    window.addEventListener('keydown', onKeyPressed);
-    return () => window.removeEventListener('keydown', onKeyPressed);
-  }, [words, status, currentRoundIndex, currentWordIndex, correctLetterIndex]);
+  });
 
   useEffect(() => {
     getProgrammingWords().then((programmingWords: PracticeWord[]) => {
+      console.log(programmingWords);
+      
       const randomWordsPerRound = range(rounds).map(_ => pickRandomItems(programmingWords, wordsCount));
       setWords(randomWordsPerRound);
       
@@ -54,7 +54,9 @@ const TypingPractice: React.FC<ITypingPracticeProps> = ({ rounds, wordsCount, la
   }, []);
 
   const progress = () => {
-    if (currentWord && correctLetterIndex + 1 === currentWord[language].length) {
+    
+
+    if (currentWord && correctLetterIndex + 1 === currentWord.value[language].length) {
       if (currentWordIndex + 1 === wordsCount) {
         if (currentRoundIndex + 1 === rounds) {
           setStatus(Status.Finished);
@@ -73,7 +75,6 @@ const TypingPractice: React.FC<ITypingPracticeProps> = ({ rounds, wordsCount, la
     }
   };
   
-  console.log(correctLetterIndex)
   return (
     <div className="typing-practice">
       {
@@ -93,12 +94,18 @@ const TypingPractice: React.FC<ITypingPracticeProps> = ({ rounds, wordsCount, la
             <div className="ready-message">Press any key to start</div>
           ) : currentWord && (
             <div className='current-word'>
-              { translationLanguage && <p>({currentWord[translationLanguage]})</p>}
-              <PartialWord word={currentWord[language]} currentIndex={correctLetterIndex} />
+              { translationLanguage && <p>({currentWord.value[translationLanguage]})</p>}
+              <PartialWord word={currentWord.value[language]} currentIndex={correctLetterIndex} />
             </div>
             )}
         </div>
-        <div className="footer"></div>
+        <div className="footer">
+          { translationLanguage && status === Status.Active && (
+            <div className="meaning">
+            { currentWord && currentWord.meaning && <div className="meaning">{ currentWord.meaning[translationLanguage] }</div> }
+          </div>
+          )}
+        </div>
         </>
       ) : (
         <div className="results">

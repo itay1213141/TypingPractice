@@ -3,4 +3,9 @@ export enum Language {
   English = "English",
 }
 
-export type PracticeWord = Record<Language, string>;
+export type LanguageString = Record<Language, string>;
+
+export interface PracticeWord {
+  value: LanguageString;
+  meaning?: LanguageString;
+}

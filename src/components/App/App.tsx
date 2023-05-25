@@ -4,7 +4,7 @@ import appConfig from '../../config/app';
 import './App.less'
 import { Language } from '../../common/types/words';
 
-const App = () => {
+const App: React.FC = () => {
   const [rounds, setRounds] = useState(appConfig.DEFAULT_ROUNDS);
   const [wordsCount, setWordsCount] = useState(appConfig.DEFAULT_WORDS_COUNT);
   
