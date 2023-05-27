@@ -34,8 +34,7 @@ export const getProgrammingWords = async (): Promise<PracticeWord[]> => {
       meaning: {
         [Language.English]:
           "A control flow statement that allows code to be executed repeatedly based on a condition",
-        [Language.Hebrew]:
-          "הצהרה של זרימת בקרה המאפשרת ביצוע קוד בדיקה שוב ושוב בהתאם לתנאי מסוים",
+        [Language.Hebrew]: "קטע קוד שחוזר על עצמו בהתאם לתנאי מסוים",
       },
     },
     {
@@ -46,8 +45,7 @@ export const getProgrammingWords = async (): Promise<PracticeWord[]> => {
       meaning: {
         [Language.English]:
           "A data structure that stores a collection of elements, each identified by an index or key",
-        [Language.Hebrew]:
-          "מבנה נתונים שמאחסן אוסף של אלמנטים, כשכל אלמנט מזוהה על ידי אינדקס או מפתח",
+        [Language.Hebrew]: "רשימה של נתונים",
       },
     },
     {
@@ -59,7 +57,7 @@ export const getProgrammingWords = async (): Promise<PracticeWord[]> => {
         [Language.English]:
           "An instance of a class that encapsulates properties and methods to represent a certain entity or concept",
         [Language.Hebrew]:
-          "מופע של מחלקה שמכיל תכונות ומתודות לייצוג יישות או רעיון מסוים",
+          "מופע אחד של מחלקה, המכיל מידע ומתודות שמייצגות רעיון מסוים",
       },
     },
     {
@@ -120,30 +118,6 @@ export const getProgrammingWords = async (): Promise<PracticeWord[]> => {
     },
     {
       value: {
-        [Language.English]: "Conditional",
-        [Language.Hebrew]: "תלוי תנאי",
-      },
-      meaning: {
-        [Language.English]:
-          "A statement or expression that allows different actions to be performed based on a condition",
-        [Language.Hebrew]:
-          "הצהרה או ביטוי שמאפשר פעולות שונות להתבצע על פי תנאי מסוים",
-      },
-    },
-    {
-      value: {
-        [Language.English]: "Operator",
-        [Language.Hebrew]: "אופרטור",
-      },
-      meaning: {
-        [Language.English]:
-          "A symbol or keyword that represents an action or operation to be performed on operands",
-        [Language.Hebrew]:
-          "סמל או מילת מפתח שמייצגת פעולה או פעולה שיישומה על ערכים",
-      },
-    },
-    {
-      value: {
         [Language.English]: "Parameter",
         [Language.Hebrew]: "פרמטר",
       },
@@ -183,7 +157,7 @@ export const getProgrammingWords = async (): Promise<PracticeWord[]> => {
       meaning: {
         [Language.English]:
           "The process of identifying and fixing errors or bugs in a program",
-        [Language.Hebrew]: "תהליך הזיהוי ותיקון שגיאות או באגים בתוכנית",
+        [Language.Hebrew]: "תהליך הזיהוי ותיקון שגיאות או בעיות בתוכנית",
       },
     },
     {
@@ -194,7 +168,8 @@ export const getProgrammingWords = async (): Promise<PracticeWord[]> => {
       meaning: {
         [Language.English]:
           "The set of rules that define the structure and organization of a programming language",
-        [Language.Hebrew]: "קבוצת הכללים שמגדירה את המבנה והארגון של שפת תכנות",
+        [Language.Hebrew]:
+          "הכללים של כתיבת קוד בשפת תכנות מסוימת כגון מילים וסימנים שמותר להשתמש, ובאיזה סדר",
       },
     },
     {
@@ -205,20 +180,7 @@ export const getProgrammingWords = async (): Promise<PracticeWord[]> => {
       meaning: {
         [Language.English]:
           "A software program that translates source code written in a high-level programming language into machine code that can be executed directly by a computer",
-        [Language.Hebrew]:
-          "תוכנה שמתרגמת קוד מקור בשפת תכנות ברמה גבוהה לקוד מכונה שניתן להריץ ישירות על ידי מחשב",
-      },
-    },
-    {
-      value: {
-        [Language.English]: "Code",
-        [Language.Hebrew]: "קוד",
-      },
-      meaning: {
-        [Language.English]:
-          "Instructions written in a programming language that describe the actions to be performed by a computer",
-        [Language.Hebrew]:
-          "הוראות שנכתבות בשפת תכנות שמתארות את הפעולות שיש לבצע על ידי מחשב",
+        [Language.Hebrew]: "תוכנה שהופכת קוד לשפת מכונה שיכולה לרוץ על המחשב",
       },
     },
     {
@@ -242,7 +204,7 @@ export const getProgrammingWords = async (): Promise<PracticeWord[]> => {
         [Language.English]:
           "A structured collection of data that is organized and managed to provide efficient retrieval, modification, and storage capabilities",
         [Language.Hebrew]:
-          "אוסף ממוין של נתונים המועדף וניהול על מנת לספק אפשרויות אפקטיביות לחיפוש, שינוי ואחסון",
+          "מקום בו אפשר לשמור המון מידע, ואחר כך להוציא אותו בצורה נוחה מאוד",
       },
     },
     {
