@@ -1,0 +1,29 @@
+.results {
+  direction: rtl;
+
+  .title {    
+    font-size: 6rem;
+    margin-bottom: 50px;
+    text-decoration: underline;
+    text-decoration-thickness: from-font;
+  }
+
+  .stats {
+    &>* {
+      margin-bottom: 30px;
+    }
+
+    .rounds {
+      list-style: none;
+      margin: 10px 0;
+    }
+
+    .score-delta {
+      color: red;
+
+      &.positive {
+        color: green;
+      }
+    }
+  }
+}

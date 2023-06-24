@@ -8,6 +8,8 @@ import PartialWord from "../PartialWord/PartialWord";
 import { Status } from "../../common/types/status";
 import { useEventListener } from "usehooks-ts";
 import appConfig from "../../config/app";
+import { useStopwatch } from "react-use-precision-timer";
+import Results from "../Results/Results";
 
 interface ITypingPracticeProps {
   rounds?: number;
@@ -24,6 +26,12 @@ const TypingPractice: React.FC<ITypingPracticeProps> = ({
 }) => {
   const [status, setStatus] = useState<Status>(Status.Loading);
   const [words, setWords] = useState<PracticeWord[][]>([]);
+  const [times, setTimes] = useState<number[][]>(
+    range(rounds).map((_) => range(wordsCount).map((_) => 0))
+  );
+  const [mistakes, setMistakes] = useState<number[][]>(
+    range(rounds).map((_) => range(wordsCount).map((_) => 0))
+  );
 
   const [currentRoundIndex, setCurrentRoundIndex] = useState<number>(0);
   const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
@@ -49,59 +57,117 @@ const TypingPractice: React.FC<ITypingPracticeProps> = ({
     [currentWord]
   );
 
-  useEffect(() => {
-    getProgrammingWords().then((programmingWords: PracticeWord[]) => {
-      const randomWordsPerRound = range(rounds).map((_) =>
-        pickRandomItems(programmingWords, wordsCount)
-      );
+  const stopwatch = useStopwatch();
 
-      setWords(randomWordsPerRound);
-      setStatus(Status.Ready);
-    });
-  }, []);
+  useEffect(() => {
+    if (status === Status.Loading) {
+      getProgrammingWords().then((programmingWords: PracticeWord[]) => {
+        const randomWordsPerRound = range(rounds).map((_) =>
+          pickRandomItems(programmingWords, wordsCount)
+        );
+
+        setWords(randomWordsPerRound);
+        setStatus(Status.Ready);
+      });
+    }
+  }, [status]);
 
   const nextRound = useCallback(() => {
     if (currentRoundNumber === rounds) {
       setStatus(Status.Finished);
+      stopwatch.stop();
+
+      return false;
     } else {
       setCurrentRoundIndex((index) => index + 1);
     }
+
+    return true;
   }, [currentRoundIndex]);
 
   const nextWord = useCallback(() => {
+    let hasEnded = false;
+
     if (currentWordNumber === wordsCount) {
-      nextRound();
+      hasEnded = !nextRound();
       setCurrentWordIndex(0);
     } else {
       setCurrentWordIndex((index) => index + 1);
+    }
+
+    if (!hasEnded) {
+      const timesCopy = times.map((roundTimes) => [...roundTimes]);
+      timesCopy[currentRoundIndex][currentWordIndex] =
+        stopwatch.getElapsedRunningTime();
+      setTimes(timesCopy);
+
+      stopwatch.start();
     }
   }, [currentWordIndex]);
 
   const progress = useCallback(
     (key: string) => {
-      if (
-        currentWord?.value[language][correctLetterIndex].toUpperCase() ===
-        key.toUpperCase()
-      ) {
-        if (correctLetterIndex + 1 === currentWord.value[language].length) {
-          nextWord();
-          setCorrectLetterIndex(0);
+      if (currentWord) {
+        if (
+          currentWord.value[language][correctLetterIndex].toUpperCase() ===
+          key.toUpperCase()
+        ) {
+          if (correctLetterIndex + 1 === currentWord.value[language].length) {
+            const mistakesCopy = mistakes.map((roundMistakes) => [
+              ...roundMistakes,
+            ]);
+
+            // calculate percentage of correct letters
+            mistakesCopy[currentRoundIndex][currentWordIndex] =
+              mistakesCopy[currentRoundIndex][currentWordIndex] /
+              currentWord.value[language].length;
+            setMistakes(mistakesCopy);
+
+            nextWord();
+            setCorrectLetterIndex(0);
+          } else {
+            setCorrectLetterIndex((index) => index + 1);
+          }
         } else {
-          setCorrectLetterIndex((index) => index + 1);
+          const mistakesCopy = mistakes.map((roundMistakes) => [
+            ...roundMistakes,
+          ]);
+
+          // add to the amount of letters you didn't get right on your first try
+          mistakesCopy[currentRoundIndex][currentWordIndex] = Math.min(
+            mistakesCopy[currentRoundIndex][currentWordIndex] + 1,
+            currentWord.value[language].length
+          );
+
+          setMistakes(mistakesCopy);
         }
       }
     },
-    [currentWord, correctLetterIndex]
+    [currentWord, correctLetterIndex, mistakes]
   );
 
   useEventListener("keydown", ({ key }: KeyboardEvent) => {
+    if (status === Status.Finished) return;
+
     if (status === Status.Ready && !key.match(/F\d+/)) {
       setStatus(Status.Active);
+      stopwatch.start();
       return;
     }
 
     progress(key);
   });
+
+  const reset = () => {
+    setTimes(range(rounds).map((_) => range(wordsCount).map((_) => 0)));
+    setMistakes(range(rounds).map((_) => range(wordsCount).map((_) => 0)));
+
+    setCurrentRoundIndex(0);
+    setCurrentWordIndex(0);
+    setCorrectLetterIndex(0);
+
+    setStatus(Status.Loading);
+  };
 
   return (
     <div className="typing-practice">
@@ -158,7 +224,14 @@ const TypingPractice: React.FC<ITypingPracticeProps> = ({
           </footer>
         </>
       ) : (
-        <div className="results">results will be here</div>
+        <>
+          <Results
+            results={{ averageTimes: times, mistakePercentages: mistakes }}
+          />
+          <button className="reset" onClick={reset}>
+            שחקו שוב
+          </button>
+        </>
       )}
     </div>
   );

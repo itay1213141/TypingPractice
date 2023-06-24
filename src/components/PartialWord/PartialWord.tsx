@@ -1,8 +1,9 @@
-import React from 'react';
+import React from "react";
+import "./PartialWord.less";
 
 interface IPartialWordProps {
-    word: string;
-    currentIndex: number;
+  word: string;
+  currentIndex: number;
 }
 
 const PartialWord: React.FC<IPartialWordProps> = ({ word, currentIndex }) => {
@@ -10,10 +11,11 @@ const PartialWord: React.FC<IPartialWordProps> = ({ word, currentIndex }) => {
   const end = word.substring(currentIndex, word.length);
 
   return (
-    <p className='partial-word'>
-      <span className='start'>{start}</span><span className='end'>{end}</span>
+    <p className="partial-word">
+      <span className="start">{start}</span>
+      <span className="end">{end}</span>
     </p>
-  )
-}
+  );
+};
 
-export default PartialWord
+export default PartialWord;
