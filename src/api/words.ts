@@ -242,5 +242,95 @@ export const getProgrammingWords = async (): Promise<PracticeWord[]> => {
           "רכיב ששומר מידע שלוקח הרבה זמן להשיג, כדיי שפעם הבאה הוא יגיע מהר יותר",
       },
     },
+    {
+      value: {
+        [Language.English]: "Speed",
+        [Language.Hebrew]: "מהירות",
+      },
+    },
+    {
+      value: {
+        [Language.English]: "Top",
+        [Language.Hebrew]: "חלק עליון",
+      },
+    },
+    {
+      value: {
+        [Language.English]: "Bottom",
+        [Language.Hebrew]: "חלק תחתון",
+      },
+    },
+    {
+      value: {
+        [Language.English]: "Left",
+        [Language.Hebrew]: "שמאל",
+      },
+    },
+    {
+      value: {
+        [Language.English]: "Right",
+        [Language.Hebrew]: "ימין",
+      },
+    },
+    {
+      value: {
+        [Language.English]: "Command",
+        [Language.Hebrew]: "פקודה",
+      },
+    },
+    {
+      value: {
+        [Language.English]: "File",
+        [Language.Hebrew]: "קובץ",
+      },
+    },
+    {
+      value: {
+        [Language.English]: "Delete",
+        [Language.Hebrew]: "מחק",
+      },
+    },
+    {
+      value: {
+        [Language.English]: "Remove",
+        [Language.Hebrew]: "הסר",
+      },
+    },
+    {
+      value: {
+        [Language.English]: "Add",
+        [Language.Hebrew]: "הוסף",
+      },
+    },
+    {
+      value: {
+        [Language.English]: "Color",
+        [Language.Hebrew]: "צבע",
+      },
+    },
+    {
+      value: {
+        [Language.English]: "New",
+        [Language.Hebrew]: "חדש",
+      },
+    },
+    {
+      value: {
+        [Language.English]: "Write",
+        [Language.Hebrew]: "כתוב",
+      },
+    },
+    {
+      value: {
+        [Language.English]: "Window",
+        [Language.Hebrew]: "חלון",
+      },
+    },
+    {
+      value: {
+        [Language.English]: "Constant",
+        [Language.Hebrew]: "קבוע",
+      },
+    },
   ];
 };
